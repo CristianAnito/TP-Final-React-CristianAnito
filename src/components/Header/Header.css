@@ -1,0 +1,79 @@
+/* ==========================================================================
+   Header
+   Requiere los tokens (variables --*) definidos en index.css.
+   Estructura:
+   header.site-header > div.container
+     div.logo-container > a > span.logo-mark + span.logo-text
+     <Nav />
+   ========================================================================== */
+
+/* Barra --------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--header-h);
+  background: rgba(11, 13, 24, 0.88);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  height: 100%;
+}
+
+/* Logo ---------------------------------------------------------------------- */
+.logo-container {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.logo-container a,
+.logo-container a:hover {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.logo-container a:focus-visible {
+  outline: none;
+  border-radius: var(--r-md);
+  box-shadow: var(--focus-ring);
+}
+
+.logo-mark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  font-size: 1.125rem;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-radius: var(--r-md);
+}
+
+/* Pantallas pequeñas: solo el isotipo; el nombre sigue disponible para lectores de pantalla */
+@media (max-width: 420px) {
+  .logo-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}

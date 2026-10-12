@@ -1,0 +1,24 @@
+/* ==========================================================================
+   ItemList: grilla de tarjetas (5 columnas en escritorio de 1280px)
+   ========================================================================== */
+
+.games-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
+  gap: var(--sp-5);
+  margin-top: var(--sp-5);
+}
+
+/* Cada tarjeta está envuelta en un <Link>: sin subrayado ni color de enlace */
+.games-container > a,
+.games-container > a:hover {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--r-sm);
+}
+
+.games-container > a:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

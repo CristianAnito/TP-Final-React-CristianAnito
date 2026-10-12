@@ -1,0 +1,607 @@
+/* ==========================================================================
+   Tienda de videojuegos - CSS global
+   Fuentes (agregar en index.html):
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+   ========================================================================== */
+
+/* 1. Tokens ---------------------------------------------------------------- */
+:root {
+  color-scheme: dark;
+
+  /* Superficies: la elevación se expresa con claridad, no con sombras */
+  --bg-base: #0b0d18;
+  --bg-raised: #121528;
+  --bg-card: #181c33;
+  --bg-card-hover: #1f2440;
+  --bg-input: #0f1222;
+
+  /* Acento principal único (acción) + secundarios con rol fijo */
+  --accent: #19e3ff;          /* acciones, enlaces, foco */
+  --accent-strong: #5cecff;   /* hover */
+  --accent-ink: #04141a;      /* texto sobre --accent */
+  --genre: #b78cff;           /* géneros / etiquetas */
+  --sale: #ff4f8b;            /* descuentos */
+  --sale-ink: #1a0510;        /* texto sobre --sale */
+  --success: #3ddc97;
+  --danger: #ff6b6b;
+
+  /* Texto (contraste AA sobre --bg-base y --bg-card) */
+  --text: #eef1fb;
+  --text-muted: #a3abc7;
+  --text-faint: #7c85a6;
+
+  --border: #2a3052;
+  --border-strong: #3b4372;
+  --focus-ring: 0 0 0 3px rgba(25, 227, 255, 0.55);
+
+  /* Tipografía */
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Chakra Petch", "Figtree", system-ui, sans-serif;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --fs-2xl: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  --fs-3xl: clamp(2rem, 1.4rem + 2.6vw, 3.25rem);
+
+  /* Espaciado (escala de 4px) */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 4.5rem;
+
+  /* Radios por jerarquía */
+  --r-sm: 6px;   /* chips, inputs */
+  --r-md: 10px;  /* botones */
+  --r-lg: 14px;  /* tarjetas */
+  --r-pill: 999px;
+
+  --shadow-pop: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --header-h: 64px;
+}
+
+/* 2. Reset ----------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + var(--sp-4));
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg-base);
+  min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: inherit;
+}
+
+img,
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+ul[role="list"],
+ol[role="list"],
+ul.list-reset {
+  list-style: none;
+  padding: 0;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-strong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 3. Tipografía ------------------------------------------------------------- */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: 0;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--fs-3xl); }
+h2 { font-size: var(--fs-2xl); }
+h3 { font-size: var(--fs-xl); }
+h4 { font-size: var(--fs-lg); }
+
+p {
+  max-width: 68ch;
+  text-wrap: pretty;
+}
+
+.text-muted { color: var(--text-muted); }
+.text-sm { font-size: var(--fs-sm); }
+
+/* 4. Accesibilidad ---------------------------------------------------------- */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--sp-4);
+  top: -100px;
+  z-index: 100;
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-radius: var(--r-md);
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: var(--sp-4);
+  text-decoration: none;
+}
+
+/* 5. Layout ------------------------------------------------------------------ */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+main {
+  flex: 1;
+  padding-block: var(--sp-6) var(--sp-8);
+}
+
+.section + .section {
+  margin-top: var(--sp-7);
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  gap: var(--sp-5);
+}
+
+.stack > * + * { margin-top: var(--sp-4); }
+.cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); }
+
+/* 6. Header ------------------------------------------------------------------ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--header-h);
+  background: rgba(11, 13, 24, 0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  height: 100%;
+}
+
+.cart-count {
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding-inline: 0.35rem;
+  display: inline-grid;
+  place-items: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-radius: var(--r-pill);
+}
+
+/* 7. Botones ------------------------------------------------------------------ */
+.btn-primary,
+.btn-outline,
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: 44px; /* área táctil mínima */
+  padding: 0.6rem 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: background-color 0.15s var(--ease), border-color 0.15s var(--ease),
+    color 0.15s var(--ease), transform 0.15s var(--ease);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.btn-primary:active,
+.btn-outline:active,
+.btn-ghost:active {
+  transform: translateY(1px);
+}
+
+.btn-primary:focus-visible,
+.btn-outline:focus-visible,
+.btn-ghost:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.btn-primary:disabled,
+.btn-outline:disabled,
+.btn-ghost:disabled,
+[aria-disabled="true"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-block { width: 100%; }
+
+@media (hover: hover) {
+  .btn-primary:hover { background: var(--accent-strong); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-ghost:hover { color: var(--text); background: var(--bg-card); }
+}
+
+/* 8. Formularios ---------------------------------------------------------------- */
+input,
+select,
+textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.55rem 0.85rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  transition: border-color 0.15s var(--ease), box-shadow 0.15s var(--ease);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-faint);
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: var(--focus-ring);
+}
+
+input[aria-invalid="true"],
+.is-invalid {
+  border-color: var(--danger);
+}
+
+label {
+  display: block;
+  margin-bottom: var(--sp-1);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* 9. Tarjeta de juego ----------------------------------------------------------- */
+.game-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+
+.game-card__media {
+  aspect-ratio: 3 / 4;
+  background: var(--bg-raised);
+  overflow: hidden;
+}
+
+.game-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.game-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: var(--sp-2);
+  padding: var(--sp-4);
+}
+
+.game-card__title {
+  font-size: var(--fs-lg);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.game-card__meta {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+.game-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-top: auto;
+  padding-top: var(--sp-3);
+}
+
+/* Enlace que cubre toda la tarjeta sin anidar elementos interactivos */
+.game-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.game-card__link,
+.game-card__link:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.game-card:focus-within {
+  border-color: var(--accent);
+}
+
+@media (hover: hover) {
+  .game-card:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-card-hover);
+  }
+}
+
+/* Precios */
+.price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  font-variant-numeric: tabular-nums;
+}
+
+.price__old {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 400;
+  color: var(--text-faint);
+  text-decoration: line-through;
+}
+
+/* Botón dentro de tarjeta: por encima del enlace extendido */
+.game-card .btn-primary,
+.game-card .btn-outline {
+  position: relative;
+  z-index: 1;
+}
+
+/* 10. Badges y chips ------------------------------------------------------------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.6rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.5;
+  border-radius: var(--r-pill);
+}
+
+.badge-sale {
+  background: var(--sale);
+  color: var(--sale-ink);
+}
+
+.badge-genre {
+  background: rgba(183, 140, 255, 0.14);
+  color: var(--genre);
+  border: 1px solid rgba(183, 140, 255, 0.35);
+}
+
+.badge-stock-low {
+  background: rgba(255, 107, 107, 0.14);
+  color: var(--danger);
+  border: 1px solid rgba(255, 107, 107, 0.35);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.65rem;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+}
+
+/* Posición del badge de oferta sobre la imagen */
+.game-card__media + .badge-sale,
+.game-card .badge-sale--corner {
+  position: absolute;
+  top: var(--sp-3);
+  left: var(--sp-3);
+  z-index: 1;
+}
+
+/* 11. Estados de carga y vacío ------------------------------------------------------ */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  border-radius: var(--r-sm);
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  to { background-position: -200% 0; }
+}
+
+.empty-state {
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-8) var(--sp-4);
+  text-align: center;
+  color: var(--text-muted);
+}
+
+/* 12. Scrollbar -------------------------------------------------------------------- */
+html {
+  scrollbar-color: var(--border-strong) var(--bg-base);
+}
+
+/* 13. Movimiento reducido ------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Botones (.btn + .bg-primary / .bg-success / .bg-delete)
+   Pegar al final de index.css si estas clases no están definidas en otro CSS.
+   La clase "primary" que usás en el JSX no necesita reglas.
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  padding: 0.6rem 1.25rem;
+  font-weight: 600;
+  line-height: 1.2;
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  text-decoration: none;
+  transition: filter 0.15s var(--ease), transform 0.15s var(--ease);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bg-primary { background: var(--accent);  color: var(--accent-ink); }
+.bg-success { background: var(--success); color: #04140c; }
+.bg-delete  { background: var(--danger);  color: #1a0505; }
+
+@media (hover: hover) {
+  .btn:hover:not(:disabled) {
+    filter: brightness(1.12);
+    text-decoration: none;
+  }
+}

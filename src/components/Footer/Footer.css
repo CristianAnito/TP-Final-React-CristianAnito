@@ -1,0 +1,73 @@
+/* ==========================================================================
+   Footer (para el JSX sin clases adicionales)
+   Requiere los tokens (variables --*) definidos en index.css.
+   Estructura esperada, sin modificar:
+   footer > nav > ul.nav-list > li (Whatsapp, Instagram, Facebook, en ese orden)
+   ========================================================================== */
+
+footer {
+  margin-top: auto; /* queda al fondo si el contenido es corto */
+  padding: var(--sp-6) clamp(1rem, 4vw, 2rem);
+  background: var(--bg-raised);
+  border-top: 1px solid var(--border);
+}
+
+/* Se escopea con "footer" para no heredar ni pisar los estilos de .nav-list del Nav */
+footer .nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  list-style: none;
+  padding: 0;
+}
+
+footer .nav-list li {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-width: 44px;
+  min-height: 44px; /* área táctil mínima */
+  padding: 0 var(--sp-3);
+  font-size: 0; /* móvil: solo el icono; el texto sigue accesible */
+  font-weight: 500;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+
+/* Icono: se dibuja con CSS como máscara y hereda el color del texto */
+footer .nav-list li::before {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+/* Whatsapp (1.º) */
+footer .nav-list li:nth-child(1) {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z'/%3E%3C/svg%3E");
+}
+
+/* Instagram (2.º) */
+footer .nav-list li:nth-child(2) {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='2' width='20' height='20' rx='5' ry='5'/%3E%3Cpath d='M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z'/%3E%3Cline x1='17.5' y1='6.5' x2='17.51' y2='6.5'/%3E%3C/svg%3E");
+}
+
+/* Facebook (3.º) */
+footer .nav-list li:nth-child(3) {
+  --icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z'/%3E%3C/svg%3E");
+}
+
+/* Pantallas desde 480px: icono + texto */
+@media (min-width: 480px) {
+  footer .nav-list li {
+    font-size: var(--fs-sm);
+  }
+}
